@@ -80,7 +80,7 @@ const SearchBooks = () => {
     try {
       console.log(bookToSave);
       await saveBook({
-        variables: { bookToSave },
+        variables: { ...bookToSave },
       });
 
       // if book successfully saves to user's account, save book id to state
