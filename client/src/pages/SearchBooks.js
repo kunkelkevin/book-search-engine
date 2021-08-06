@@ -15,7 +15,6 @@ import { QUERY_ME } from "../utils/queries";
 import { SAVE_BOOK } from "../utils/mutations";
 import { searchGoogleBooks } from "../utils/API";
 import { saveBookIds, getSavedBookIds } from "../utils/localStorage";
-// import { saveBook } from "../../../server/controllers/user-controller";
 
 const SearchBooks = () => {
   // create state for holding returned google api data
@@ -25,7 +24,6 @@ const SearchBooks = () => {
 
   const [saveBook, { error }] = useMutation(SAVE_BOOK, {
     update(cache, { data: { saveBook } }) {
-      // const { me } = cache.readQuery({ query: QUERY_ME });
       cache.writeQuery({
         query: QUERY_ME,
         data: { me: { ...saveBook } },
@@ -79,13 +77,6 @@ const SearchBooks = () => {
     // find the book in `searchedBooks` state by the matching id
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
 
-    // get token
-    // const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-    // if (!token) {
-    //   return false;
-    // }
-
     try {
       console.log(bookToSave);
       await saveBook({
@@ -127,6 +118,7 @@ const SearchBooks = () => {
       </Jumbotron>
 
       <Container>
+        {error && <div>A problem occurred when saving your book</div>}
         <h2>
           {searchedBooks.length
             ? `Viewing ${searchedBooks.length} results:`
